@@ -23,9 +23,10 @@
             <input type="text" class="form-control" name="price_sale" id="price_sale" aria-describedby="helpId"
                 placeholder="" value="{{ $product->price_sale }}">
 
-            <label for="" class="form-label">Image</label>
-            <input type="file" class="form-control" name="img" id="img" aria-describedby="helpId"
-                placeholder="">
+                <label for="" class="form-label">Image</label>
+                <input type="file" class="form-control" name="img" id="img" aria-describedby="helpId"
+                    placeholder="" value="{{ $product->img }}">
+                <img src="{{ Storage::url($product->img) }}" alt="" width="100">
 
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="is_active" id="is-active1"

@@ -7,22 +7,23 @@
     @endif
     <h1>Edit Device</h1>
     <a href="{{ route('devices.index') }}" class="btn btn-primary">Back</a>
-    <form action="{{ route('devices.update', $device->id) }}" method="POST">
+    <form action="{{ route('devices.update', $device->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
             <label for="" class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId" placeholder=""
-                value="{{ $device->name }}">
+            <input type="text" class="form-control" name="name" id="name" aria-describedby="helpId"
+                placeholder="" value="{{ $device->name }}">
 
             <label for="" class="form-label">Serial</label>
             <input type="text" class="form-control" name="serial" id="serial" aria-describedby="helpId"
-                placeholder=""
-                value="{{ $device->serial }}">
+                placeholder="" value="{{ $device->serial }}">
 
             <label for="" class="form-label">Image</label>
             <input type="file" class="form-control" name="img" id="img" aria-describedby="helpId"
-                placeholder="">
+                placeholder="" value="{{ $device->img }}">
+            <img src="{{ Storage::url($device->img) }}" alt="" width="100">
+
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="is_active" id="isactive1"
                     value="{{ \App\Models\Device::ACTIVE }}" @if ($device->is_active == \App\Models\Device::ACTIVE) checked @endif>

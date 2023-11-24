@@ -26,7 +26,7 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->serial }}</td>
                         <td>
-                            <img src="{{ $item->imgage }}" alt="" height="50">
+                            <img src="{{Storage::url($item->img)}}" alt="" width="100">
                         </td>
                         <td>{{ $item->is_active ? 'active' : 'inactive' }}</td>
                         <td>{{ $item->description }}</td>

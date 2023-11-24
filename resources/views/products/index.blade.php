@@ -21,7 +21,9 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->price }}</td>
                         <td>{{ $item->price_sale }}</td>
-                        <td>{{ $item->img }}</td>
+                        <td>
+                            <img src="{{ Storage::url($item->img) }}" alt="" width="100">
+                        </td>
                         <td>{{ $item->is_active ? 'active' : 'inactive' }}</td>
                         <td>{{ $item->describe }}</td>
                         <td>

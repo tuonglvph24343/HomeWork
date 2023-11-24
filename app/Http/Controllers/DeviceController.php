@@ -35,8 +35,6 @@ class DeviceController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'serial' => 'required|string|max:100|unique:devices',
-            'img' => 'nullable|string|max:255',
-            'is_active' => 'boolean',
             'describe' => 'nullable|string',
         ]);
         $data = $request->except(['img']);
@@ -68,8 +66,17 @@ class DeviceController extends Controller
      */
     public function update(Request $request, Device $device)
     {
-        $device->update($request->all());
-        return back()->with('msg', 'success');
+        $data = $request->except(['img']);
+        if ($request->hasFile('img')) {
+            $data['img'] = Storage::put(self::PATH_UPLOAD, $request->file('img'));
+        }
+        $oldPathImg = $device->img;
+        $device->update($data);
+        if ($request->hasFile('img')) {
+            Storage::delete($oldPathImg);
+        }
+
+        return back()->with('msg', 'thao tac thanh cong');
     }
 
     /**
@@ -78,6 +85,9 @@ class DeviceController extends Controller
     public function destroy(Device $device)
     {
         $device->delete();
-        return back()->with('msg', ' delete success');
+        if (Storage::exists($device->img)) {
+            Storage::delete($device->img);
+        }
+        return back()->with('msg', 'thao tac thanh cong');
     }
 }
