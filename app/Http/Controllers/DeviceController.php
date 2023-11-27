@@ -15,7 +15,7 @@ class DeviceController extends Controller
     const PATH_UPLOAD = 'devices';
     public function index()
     {
-        $data = Device::query()->paginate(1);
+        $data = Device::query()->latest('id')->paginate(1);
         return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
     }
 
@@ -35,6 +35,8 @@ class DeviceController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'serial' => 'required|string|max:100|unique:devices',
+            'img' => 'nullable|max:1000',
+            'is_active' =>'required|boolean',
             'describe' => 'nullable|string',
         ]);
         $data = $request->except(['img']);
@@ -66,6 +68,13 @@ class DeviceController extends Controller
      */
     public function update(Request $request, Device $device)
     {
+        // $request->validate([
+        //     'name' => 'required|string|max:100',
+        //     'serial' => 'required|string|max:100|unique:devices,serial,'.$device->serial,
+        //     'img' => 'nullable|max:1000',
+        //     'is_active' =>'required|boolean',
+        //     'describe' => 'nullable|string',
+        // ]);
         $data = $request->except(['img']);
         if ($request->hasFile('img')) {
             $data['img'] = Storage::put(self::PATH_UPLOAD, $request->file('img'));
